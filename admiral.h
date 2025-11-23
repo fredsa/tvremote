@@ -1,0 +1,264 @@
+//  Admiral 13" CRT, model no. JSJ12307
+//  https://crtdatabase.com/crts/admiral/admiral-jsj12307
+
+#define IR_ADDRESS 0x01
+#define IR_REPEATS 1;
+
+// IR Commands
+//
+// (  1) 0x00
+// (  1) 0x01 1
+// (  2) 0x02 2
+// (  3) 0x03 3
+// (  4) 0x04 4
+// (  5) 0x05 5
+// (  6) 0x06 6
+// (  7) 0x07 7
+// (  8) 0x08 8
+// (  9) 0x09 9
+// ( 10) 0x0a 0
+// ( 11) 0x0b 100
+// ( 12) 0x0c blue/yellow channels?
+// ( 13) 0x0d
+// ( 14) 0x0e
+// ( 15) 0x0f
+// ( 16) 0x10
+// ( 17) 0x11 channel +
+// ( 18) 0x12 channel -
+// ( 19) 0x13
+// ( 20) 0x14 volume +
+// ( 21) 0x15 volume -
+// ( 22) 0x16 power
+// ( 23) 0x17 mute
+// ( 24) 0x18 show channel? (display??)
+// ( 25) 0x19
+// ( 26) 0x1a
+// ( 27) 0x1b show channel? (display??)
+// ( 28) 0x1c
+// ( 29) 0x1d
+// ( 30) 0x1e
+// ( 31) 0x1f
+// ( 32) 0x20 menu
+// ( 33) 0x21
+// ( 34) 0x22
+// ( 35) 0x23
+// ( 36) 0x24
+// ( 37) 0x25
+// ( 38) 0x26
+// ( 39) 0x27
+// ( 40) 0x28 factory reset & power off
+// ( 41) 0x29
+// ( 42) 0x2a
+// ( 43) 0x2b
+// ( 44) 0x2c
+// ( 45) 0x2d
+// ( 46) 0x2e
+// ( 47) 0x2f toggle most recent channel
+// ( 48) 0x30
+// ( 49) 0x31
+// ( 50) 0x32
+// ( 51) 0x33
+// ( 52) 0x34
+// ( 53) 0x35
+// ( 54) 0x36
+// ( 55) 0x37
+// ( 56) 0x38
+// ( 57) 0x39
+// ( 58) 0x3a
+// ( 59) 0x3b
+// ( 60) 0x3c
+// ( 61) 0x3d
+// ( 62) 0x3e
+// ( 63) 0x3f
+// ( 64) 0x40 factory programming (toggle)?
+// ( 65) 0x41
+// ( 66) 0x42
+// ( 67) 0x43
+// ( 68) 0x44
+// ( 69) 0x45
+// ( 70) 0x46
+// ( 71) 0x47
+// ( 72) 0x48
+// ( 73) 0x49 picture, tint, color, bright, sharp, favorite color, reset
+// ( 74) 0x4a caption
+// ( 75) 0x4b
+// ( 76) 0x4c
+// ( 77) 0x4d
+// ( 78) 0x4e
+// ( 79) 0x4f
+// ( 80) 0x50
+// ( 81) 0x51
+// ( 82) 0x52
+// ( 83) 0x53
+// ( 84) 0x54
+// ( 85) 0x55
+// ( 86) 0x56
+// ( 87) 0x57
+// ( 88) 0x58
+// ( 89) 0x59
+// ( 90) 0x5a
+// ( 91) 0x5b
+// ( 92) 0x5c
+// ( 93) 0x5d
+// ( 94) 0x5e
+// ( 95) 0x5f
+// ( 96) 0x60
+// ( 97) 0x61
+// ( 98) 0x62
+// ( 99) 0x63
+// (100) 0x64
+// (101) 0x65
+// (102) 0x66
+// (103) 0x67
+// (104) 0x68
+// (105) 0x69
+// (106) 0x6a
+// (107) 0x6b
+// (108) 0x6c
+// (109) 0x6d
+// (110) 0x6e
+// (111) 0x6f
+// (112) 0x70
+// (113) 0x71
+// (114) 0x72
+// (115) 0x73
+// (116) 0x74
+// (117) 0x75
+// (118) 0x76
+// (119) 0x77 T
+// (120) 0x78 Language English, Espanol, Francais
+// (121) 0x79
+// (122) 0x7a
+// (123) 0x7b
+// (124) 0x7c
+// (125) 0x7d
+// (126) 0x7e
+// (127) 0x7f
+// (128) 0x80
+// (129) 0x81
+// (130) 0x82
+// (131) 0x83
+// (132) 0x84
+// (133) 0x85
+// (134) 0x86
+// (135) 0x87
+// (136) 0x88
+// (137) 0x89
+// (138) 0x8a
+// (139) 0x8b Factory programming S01 54(084)
+// (140) 0x8c Factory programming S02 3A(05B)
+// (141) 0x8d Factory programming S03 31(049)
+// (142) 0x8e Factory programming S04 43(067)
+// (143) 0x8f Factory programming S05 24(036)
+// (144) 0x90 Factory programming S06 02(002)
+// (145) 0x91 Factory programming S07 0C(012)
+// (146) 0x92 Factory programming S08 2B(043)
+// (147) 0x93 Factory programming S09 18(025)
+// (148) 0x94 Factory programming S10 08(008)
+// (149) 0x95 Factory programming S11 02(002)
+// (150) 0x96 Factory programming S11 01(001)
+// (151) 0x97 Factory programming S12 0D(013)
+// (152) 0x98 Factory programming S12 0C(012)
+// (153) 0x99 Factory programming S13 32(050)
+// (154) 0x9a Factory programming S13 31(049)
+// (155) 0x9b Factory programming S14 64(100)
+// (156) 0x9c Factory programming S14 63(099)
+// (157) 0x9d Factory programming S15 7F(127)
+// (158) 0x9e Factory programming S25 7E(126)
+// (159) 0x9f Toggle vertical deflection
+// (160) 0xa0
+// (161) 0xa1
+// (162) 0xa2
+// (163) 0xa3
+// (164) 0xa4
+// (165) 0xa5
+// (166) 0xa6
+// (167) 0xa7
+// (168) 0xa8
+// (169) 0xa9
+// (170) 0xaa
+// (171) 0xab
+// (172) 0xac
+// (173) 0xad
+// (174) 0xae
+// (175) 0xaf
+// (176) 0xb0
+// (177) 0xb1
+// (178) 0xb2
+// (179) 0xb3
+// (180) 0xb4
+// (181) 0xb5 Factory programming w/ OSD S18 1B(027)
+// (182) 0xb6
+// (183) 0xb7
+// (184) 0xb8
+// (185) 0xb9
+// (186) 0xba
+// (187) 0xbb
+// (188) 0xbc
+// (189) 0xbd
+// (190) 0xbe
+// (191) 0xbf
+// (192) 0xc0
+// (193) 0xc1
+// (194) 0xc2
+// (195) 0xc3
+// (196) 0xc4
+// (197) 0xc5
+// (198) 0xc6
+// (199) 0xc7
+// (200) 0xc8
+// (201) 0xc9
+// (202) 0xca
+// (203) 0xcb
+// (204) 0xcc
+// (205) 0xcd
+// (206) 0xce
+// (207) 0xcf
+// (208) 0xd0
+// (209) 0xd1
+// (210) 0xd2
+// (211) 0xd3
+// (212) 0xd4
+// (213) 0xd5
+// (214) 0xd6
+// (215) 0xd7
+// (216) 0xd8
+// (217) 0xd9
+// (218) 0xda
+// (219) 0xdb
+// (220) 0xdc
+// (221) 0xdd
+// (222) 0xde
+// (223) 0xdf
+// (224) 0xe0
+// (225) 0xe1
+// (226) 0xe2
+// (227) 0xe3 Factory programming P01 30(048)
+// (228) 0xe4
+// (229) 0xe5
+// (230) 0xe6
+// (231) 0xe7
+// (232) 0xe8 Factory programming M01 0A(010)
+// (233) 0xe9
+// (234) 0xea
+// (235) 0xeb
+// (236) 0xec
+// (237) 0xed
+// (238) 0xee
+// (239) 0xef
+// (240) 0xf0
+// (241) 0xf1
+// (242) 0xf2
+// (243) 0xf3
+// (244) 0xf4
+// (245) 0xf5
+// (246) 0xf6
+// (247) 0xf7
+// (248) 0xf8
+// (249) 0xf9
+// (250) 0xfa
+// (251) 0xfb
+// (252) 0xfc
+// (253) 0xfd
+// (254) 0xfe
+// (255) 0xff
