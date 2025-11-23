@@ -3,6 +3,8 @@
 Basic example using a microcontroller as an IR blaster.
 Mine are from [Adafruit](https://adafruit.com/).
 
+<img src="tvremote.png" width="200px">
+
 # Getting started
 
 1. Install the [Arduino IDE](https://www.arduino.cc/en/software/), and the
