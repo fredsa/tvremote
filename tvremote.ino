@@ -67,6 +67,31 @@ void configure() {
       Serial.println("Invalid selection.");
     }
   }
+  Serial.println();
+  Serial.println("To change runtime settings, set vaues (__) in hex:");
+  Serial.println("  #__  Set device address");
+  Serial.println("  r__  Set number of repeats, typically 1, 3, or 5");
+  Serial.println("  m__  Set min delay between codes in milliseconds");
+  Serial.println("  %__  Set number of bits (0x0c (12), 0x0f (15), 0x14 (20) - SONY protocol only");
+  Serial.println();
+  Serial.println("To send codes, enter one or more hex bytes.");
+  Serial.println();
+}
+
+bool handleSetting(String &line, char prefix, uint8_t &variable,
+                   const char *varName, const char *format) {
+  if (line.startsWith(String(prefix))) {
+    if (line.length() >= 3 && isHexadecimalDigit(line[1]) &&
+        isHexadecimalDigit(line[2])) {
+      char buf[3] = {line[1], line[2], '\0'};
+      variable = (uint8_t)strtol(buf, NULL, 16);
+      Serial.printf("%s: ", varName);
+      Serial.printf(format, variable);
+      Serial.println();
+    }
+    return true;
+  }
+  return false;
 }
 
 void processLine(String line) {
@@ -80,12 +105,14 @@ void processLine(String line) {
     return;
   }
 
-  if (line.startsWith("#")) {
-    String d = line.substring(1);
-    sRepeats = d.toInt();
-    Serial.printf("sRepeats: 0x%02x\n", sRepeats);
+  if (handleSetting(line, '#', sAddress, "sAddress", "0x%02x"))
     return;
-  }
+  if (handleSetting(line, 'r', sRepeats, "sRepeats", "0x%02x"))
+    return;
+  if (handleSetting(line, '%', sNumberOfBits, "sNumberOfBits", "%d"))
+    return;
+  if (handleSetting(line, 'm', sMinDelayMs, "sMinDelayMs", "%d ms"))
+    return;
 
   char hexBuffer[3];
   hexBuffer[2] = '\0';
