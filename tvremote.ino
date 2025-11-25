@@ -71,20 +71,31 @@ void configure() {
   }
 }
 
-void loop() {
-  static char hexBuffer[3]; // Two hex digits + '\0'.
-  static uint8_t count = 0;
-
-  if (!Serial.available()) {
+void processLine(String line) {
+  line.trim();
+  if (line.length() == 0) {
     return;
   }
 
-  char incomingChar = Serial.read();
-  if (isHexadecimalDigit(incomingChar)) {
-    hexBuffer[count++] = incomingChar;
+  if (line.startsWith("*")) {
+    configure();
+    return;
+  }
 
-    if (count == 2) {
-      hexBuffer[2] = '\0';
+  if (line.startsWith("#")) {
+    String d = line.substring(1);
+    sRepeats = d.toInt();
+    Serial.printf("sRepeats: 0x%02x\n", sRepeats);
+    return;
+  }
+
+  char hexBuffer[3];
+  hexBuffer[2] = '\0';
+
+  for (int i = 0; i < (int)line.length() - 1; i++) {
+    if (isHexadecimalDigit(line[i]) && isHexadecimalDigit(line[i + 1])) {
+      hexBuffer[0] = line[i];
+      hexBuffer[1] = line[i + 1];
       uint8_t cmd = (uint8_t)strtol(hexBuffer, NULL, 16);
 
       if (selectedTV == TV_SONY) {
@@ -98,19 +109,14 @@ void loop() {
         IrSender.sendSharp(sAddress, cmd, sRepeats);
       }
       delay(sMinDelayMs);
-      count = 0;
+      i++; // Skip the second digit
     }
   }
-  count = 0;
+}
 
-  if (incomingChar == '*') {
-    configure();
-    return;
-  }
-
-  if (incomingChar == '#') {
-    String d = Serial.readStringUntil('\n');
-    sRepeats = d.toInt();
-    Serial.printf("sRepeats: 0x%02x\n", sRepeats);
+void loop() {
+  if (Serial.available()) {
+    String line = Serial.readStringUntil('\n');
+    processLine(line);
   }
 }
