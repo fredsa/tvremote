@@ -8,7 +8,8 @@
 #include "admiral_sharp.h"
 #include "sony.h"
 
-enum TVType { TV_SONY, TV_ADMIRAL_SHARP };
+enum TVType { TV_SONY,
+              TV_ADMIRAL_SHARP };
 
 TVType selectedTV;
 uint8_t sAddress;
@@ -68,29 +69,34 @@ void configure() {
       Serial.println("Invalid selection.");
     }
   }
+  show_settings();
   Serial.println();
-  Serial.println("To change runtime settings, set vaues (__) in hex:");
-  Serial.println("  #__  Set device address");
-  Serial.println("  r__  Set number of repeats, typically 1, 3, or 5");
-  Serial.println("  m__  Set min delay between codes in milliseconds");
-  Serial.println("  %__  Set number of bits (0x0c (12), 0x0f (15), 0x14 (20) - SONY protocol only");
+  Serial.println("Use above special character followed by hex bye to change these settings.");
   Serial.println();
   Serial.println("To send codes, enter one or more hex bytes.");
   Serial.println();
 }
 
-bool handleSetting(String &line, char prefix, uint8_t &variable,
-                   const char *varName, const char *format) {
+void show_settings() {
+  Serial.println();
+  Serial.printf("  #%02x  device address\n", sAddress);
+  Serial.printf("  r%02x  number of repeats, typically 1, 3, or 5\n", sRepeats);
+  Serial.printf("  m%02x  min delay between codes in milliseconds\n", sMinDelayMs);
+  Serial.printf("  ^%02x  (Sony) number of bits (0x0c / 0x0f / 0x14)\n", sNumberOfBits);
+}
+
+bool handleSetting(String &line, char prefix, uint8_t &variable) {
   if (line.startsWith(String(prefix))) {
-    if (line.length() >= 3 && isHexadecimalDigit(line[1]) &&
-        isHexadecimalDigit(line[2])) {
-      char buf[3] = {line[1], line[2], '\0'};
+    if (line.length() >= 3 && isHexadecimalDigit(line[1]) && isHexadecimalDigit(line[2])) {
+      char buf[3] = { line[1], line[2], '\0' };
       variable = (uint8_t)strtol(buf, NULL, 16);
-      Serial.printf("%s: ", varName);
-      Serial.printf(format, variable);
-      Serial.println();
+      Serial.println("Setting changed.");
+      show_settings();
+      return true;
+    } else {
+      Serial.println("Invalid setting value.");
+      return false;
     }
-    return true;
   }
   return false;
 }
@@ -106,13 +112,13 @@ void processLine(String line) {
     return;
   }
 
-  if (handleSetting(line, '#', sAddress, "sAddress", "0x%02x"))
+  if (handleSetting(line, '#', sAddress))
     return;
-  if (handleSetting(line, 'r', sRepeats, "sRepeats", "0x%02x"))
+  if (handleSetting(line, 'r', sRepeats))
     return;
-  if (handleSetting(line, '%', sNumberOfBits, "sNumberOfBits", "%d"))
+  if (handleSetting(line, 'm', sMinDelayMs))
     return;
-  if (handleSetting(line, 'm', sMinDelayMs, "sMinDelayMs", "%d ms"))
+  if (handleSetting(line, '^', sNumberOfBits))
     return;
 
   char hexBuffer[3];
@@ -135,7 +141,7 @@ void processLine(String line) {
         IrSender.sendSharp(sAddress, cmd, sRepeats);
       }
       delay(sMinDelayMs);
-      i++; // Skip the second digit
+      i++;  // Skip the second digit
     }
   }
 }
