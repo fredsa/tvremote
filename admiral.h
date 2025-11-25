@@ -1,9 +1,9 @@
 //  Admiral 13" CRT, model no. JSJ12307
 //  https://crtdatabase.com/crts/admiral/admiral-jsj12307
 
-#define IR_ADDRESS 0x01
-#define IR_REPEATS 1
-#define IR_MIN_DELAY_MS 100
+#define ADMIRAL_IR_ADDRESS 0x01
+#define ADMIRAL_IR_REPEATS 1
+#define ADMIRAL_IR_MIN_DELAY_MS 100
 
 // IR Commands
 //

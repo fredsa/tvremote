@@ -1,10 +1,10 @@
 // Sony 13" Trinitron CRT, model no. KV-13TR24
 // https://crtdatabase.com/crts/sony/sony-kv-13tr24
 
-#define IR_ADDRESS 0x01
-#define IR_REPEATS 3
-#define IR_NUMBER_OF_BITS  SIRCS_12_PROTOCOL
-#define IR_MIN_DELAY_MS 250
+#define SONY_IR_ADDRESS 0x01
+#define SONY_IR_REPEATS 3
+#define SONY_IR_NUMBER_OF_BITS  SIRCS_12_PROTOCOL
+#define SONY_IR_MIN_DELAY_MS 250
 
 // IR Commands
 //
