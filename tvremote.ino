@@ -43,14 +43,12 @@ void configure() {
       delay(10);
     }
 
-    char choice = Serial.read();
-    // Consume rest of line
-    while (Serial.available() && Serial.read() != '\n')
-      ;
+    String line = Serial.readStringUntil('\n');
+    line.trim();
 
-    Serial.println(choice);
+    Serial.println(line);
 
-    if (choice == '1') {
+    if (line == "1") {
       selectedTV = TV_SONY;
       sAddress = SONY_IR_ADDRESS;
       sRepeats = SONY_IR_REPEATS;
@@ -58,7 +56,7 @@ void configure() {
       sMinDelayMs = SONY_IR_MIN_DELAY_MS;
       Serial.println("Sony TV selected.");
       break;
-    } else if (choice == '2') {
+    } else if (line == "2") {
       selectedTV = TV_ADMIRAL;
       sAddress = ADMIRAL_IR_ADDRESS;
       sRepeats = ADMIRAL_IR_REPEATS;
