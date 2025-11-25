@@ -17,7 +17,10 @@ Mine are from [Adafruit](https://adafruit.com/).
 3. Update the project for your TV:
    - Define `IR_SEND_PIN` to be the output pin you're using.
    - Define `IR_ADDRESS` for the TV you are using.
-   - Deinfe `IR_REPEATS` if needed for your TV.
+   - Define `IR_REPEATS` if needed for your TV.
+   - Define `IR_REPEATS` if needed for your TV.
+   - Define `IR_NUMBER_OF_BITS` as appropriate for your TV.
+   - Define `IR_MIN_DELAY_MS` as appropriate for your TV.
 
 5. Build and flash to the device.
 

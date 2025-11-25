@@ -2,7 +2,8 @@
 //  https://crtdatabase.com/crts/admiral/admiral-jsj12307
 
 #define IR_ADDRESS 0x01
-#define IR_REPEATS 1;
+#define IR_REPEATS 1
+#define IR_MIN_DELAY_MS 100
 
 // IR Commands
 //
@@ -18,27 +19,27 @@
 // (  9) 0x09 9
 // ( 10) 0x0a 0
 // ( 11) 0x0b 100
-// ( 12) 0x0c blue/yellow channels?
+// ( 12) 0x0c BLUE/YELLOW CHANNELS?
 // ( 13) 0x0d
 // ( 14) 0x0e
 // ( 15) 0x0f
 // ( 16) 0x10
-// ( 17) 0x11 channel +
-// ( 18) 0x12 channel -
+// ( 17) 0x11 CHANNEL +
+// ( 18) 0x12 CHANNEL -
 // ( 19) 0x13
-// ( 20) 0x14 volume +
-// ( 21) 0x15 volume -
-// ( 22) 0x16 power
-// ( 23) 0x17 mute
-// ( 24) 0x18 show channel? (display??)
+// ( 20) 0x14 VOLUME +
+// ( 21) 0x15 VOLUME -
+// ( 22) 0x16 POWER
+// ( 23) 0x17 MUTE
+// ( 24) 0x18 SHOW CHANNEL? (DISPLAY??)
 // ( 25) 0x19
 // ( 26) 0x1a
-// ( 27) 0x1b show channel? (display??)
+// ( 27) 0x1b SHOW CHANNEL? (DISPLAY??)
 // ( 28) 0x1c
 // ( 29) 0x1d
 // ( 30) 0x1e
 // ( 31) 0x1f
-// ( 32) 0x20 menu
+// ( 32) 0x20 MENU
 // ( 33) 0x21
 // ( 34) 0x22
 // ( 35) 0x23
@@ -46,14 +47,14 @@
 // ( 37) 0x25
 // ( 38) 0x26
 // ( 39) 0x27
-// ( 40) 0x28 factory reset & power off
+// ( 40) 0x28 FACTORY RESET & POWER OFF
 // ( 41) 0x29
 // ( 42) 0x2a
 // ( 43) 0x2b
 // ( 44) 0x2c
 // ( 45) 0x2d
 // ( 46) 0x2e
-// ( 47) 0x2f toggle most recent channel
+// ( 47) 0x2f TOGGLE MOST RECENT CHANNEL
 // ( 48) 0x30
 // ( 49) 0x31
 // ( 50) 0x32
@@ -70,7 +71,7 @@
 // ( 61) 0x3d
 // ( 62) 0x3e
 // ( 63) 0x3f
-// ( 64) 0x40 factory programming (toggle)?
+// ( 64) 0x40 FACTORY PROGRAMMING (TOGGLE)?
 // ( 65) 0x41
 // ( 66) 0x42
 // ( 67) 0x43
@@ -79,8 +80,8 @@
 // ( 70) 0x46
 // ( 71) 0x47
 // ( 72) 0x48
-// ( 73) 0x49 picture, tint, color, bright, sharp, favorite color, reset
-// ( 74) 0x4a caption
+// ( 73) 0x49 PICTURE, TINT, COLOR, BRIGHT, SHARP, FAVORITE COLOR, RESET
+// ( 74) 0x4a CAPTION
 // ( 75) 0x4b
 // ( 76) 0x4c
 // ( 77) 0x4d
@@ -126,7 +127,7 @@
 // (117) 0x75
 // (118) 0x76
 // (119) 0x77 T
-// (120) 0x78 Language English, Espanol, Francais
+// (120) 0x78 LANGUAGE ENGLISH, ESPANOL, FRANCAIS
 // (121) 0x79
 // (122) 0x7a
 // (123) 0x7b
@@ -145,27 +146,27 @@
 // (136) 0x88
 // (137) 0x89
 // (138) 0x8a
-// (139) 0x8b Factory programming S01 54(084)
-// (140) 0x8c Factory programming S02 3A(05B)
-// (141) 0x8d Factory programming S03 31(049)
-// (142) 0x8e Factory programming S04 43(067)
-// (143) 0x8f Factory programming S05 24(036)
-// (144) 0x90 Factory programming S06 02(002)
-// (145) 0x91 Factory programming S07 0C(012)
-// (146) 0x92 Factory programming S08 2B(043)
-// (147) 0x93 Factory programming S09 18(025)
-// (148) 0x94 Factory programming S10 08(008)
-// (149) 0x95 Factory programming S11 02(002)
-// (150) 0x96 Factory programming S11 01(001)
-// (151) 0x97 Factory programming S12 0D(013)
-// (152) 0x98 Factory programming S12 0C(012)
-// (153) 0x99 Factory programming S13 32(050)
-// (154) 0x9a Factory programming S13 31(049)
-// (155) 0x9b Factory programming S14 64(100)
-// (156) 0x9c Factory programming S14 63(099)
-// (157) 0x9d Factory programming S15 7F(127)
-// (158) 0x9e Factory programming S25 7E(126)
-// (159) 0x9f Toggle vertical deflection
+// (139) 0x8b FACTORY PROGRAMMING S01 54(084)
+// (140) 0x8c FACTORY PROGRAMMING S02 3A(05B)
+// (141) 0x8d FACTORY PROGRAMMING S03 31(049)
+// (142) 0x8e FACTORY PROGRAMMING S04 43(067)
+// (143) 0x8f FACTORY PROGRAMMING S05 24(036)
+// (144) 0x90 FACTORY PROGRAMMING S06 02(002)
+// (145) 0x91 FACTORY PROGRAMMING S07 0C(012)
+// (146) 0x92 FACTORY PROGRAMMING S08 2B(043)
+// (147) 0x93 FACTORY PROGRAMMING S09 18(025)
+// (148) 0x94 FACTORY PROGRAMMING S10 08(008)
+// (149) 0x95 FACTORY PROGRAMMING S11 02(002)
+// (150) 0x96 FACTORY PROGRAMMING S11 01(001)
+// (151) 0x97 FACTORY PROGRAMMING S12 0D(013)
+// (152) 0x98 FACTORY PROGRAMMING S12 0C(012)
+// (153) 0x99 FACTORY PROGRAMMING S13 32(050)
+// (154) 0x9a FACTORY PROGRAMMING S13 31(049)
+// (155) 0x9b FACTORY PROGRAMMING S14 64(100)
+// (156) 0x9c FACTORY PROGRAMMING S14 63(099)
+// (157) 0x9d FACTORY PROGRAMMING S15 7F(127)
+// (158) 0x9e FACTORY PROGRAMMING S25 7E(126)
+// (159) 0x9f TOGGLE VERTICAL DEFLECTION
 // (160) 0xa0
 // (161) 0xa1
 // (162) 0xa2
@@ -187,7 +188,7 @@
 // (178) 0xb2
 // (179) 0xb3
 // (180) 0xb4
-// (181) 0xb5 Factory programming w/ OSD S18 1B(027)
+// (181) 0xb5 FACTORY PROGRAMMING W/ OSD S18 1B(027)
 // (182) 0xb6
 // (183) 0xb7
 // (184) 0xb8
@@ -233,12 +234,12 @@
 // (224) 0xe0
 // (225) 0xe1
 // (226) 0xe2
-// (227) 0xe3 Factory programming P01 30(048)
+// (227) 0xe3 FACTORY PROGRAMMING P01 30(048)
 // (228) 0xe4
 // (229) 0xe5
 // (230) 0xe6
 // (231) 0xe7
-// (232) 0xe8 Factory programming M01 0A(010)
+// (232) 0xe8 FACTORY PROGRAMMING M01 0A(010)
 // (233) 0xe9
 // (234) 0xea
 // (235) 0xeb
