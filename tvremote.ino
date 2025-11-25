@@ -28,6 +28,10 @@ void setup() {
   Serial.printf("VERSION_IRREMOTE " VERSION_IRREMOTE "\n");
   Serial.printf("IR_SEND_PIN %i\n", IR_SEND_PIN);
 
+  configure();
+}
+
+void configure() {
   while (true) {
     Serial.println();
     Serial.println("Select TV:");
@@ -76,11 +80,6 @@ void loop() {
   }
 
   char incomingChar = Serial.read();
-  // if (incomingChar == '#') {
-  //   String d = Serial.readStringUntil('\n');
-  //   sRepeats = d.toInt();
-  //   Serial.printf("sRepeats: 0x%02x\n", sRepeats);
-  // }
   if (isHexadecimalDigit(incomingChar)) {
     hexBuffer[count++] = incomingChar;
 
@@ -99,10 +98,19 @@ void loop() {
         IrSender.sendSharp(sAddress, cmd, sRepeats);
       }
       delay(sMinDelayMs);
-
       count = 0;
     }
-  } else {
-    count = 0;
+  }
+  count = 0;
+
+  if (incomingChar == '*') {
+    configure();
+    return;
+  }
+
+  if (incomingChar == '#') {
+    String d = Serial.readStringUntil('\n');
+    sRepeats = d.toInt();
+    Serial.printf("sRepeats: 0x%02x\n", sRepeats);
   }
 }
