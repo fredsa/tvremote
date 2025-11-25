@@ -1,5 +1,6 @@
 #include <Arduino.h>
 
+#define SEND_PWM_BY_TIMER
 #define IR_SEND_PIN MISO
 #define DISABLE_CODE_FOR_RECEIVER
 #include <IRremote.hpp>
