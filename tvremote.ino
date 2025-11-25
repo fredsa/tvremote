@@ -5,10 +5,10 @@
 #define DISABLE_CODE_FOR_RECEIVER
 #include <IRremote.hpp>
 
-#include "admiral.h"
+#include "admiral_sharp.h"
 #include "sony.h"
 
-enum TVType { TV_SONY, TV_ADMIRAL };
+enum TVType { TV_SONY, TV_ADMIRAL_SHARP };
 
 TVType selectedTV;
 uint8_t sAddress;
@@ -37,7 +37,7 @@ void configure() {
     Serial.println();
     Serial.println("Select TV:");
     Serial.println("1. Sony");
-    Serial.println("2. Admiral");
+    Serial.println("2. Admiral (Sharp)");
     Serial.print("Enter choice: ");
 
     while (!Serial.available()) {
@@ -58,11 +58,11 @@ void configure() {
       Serial.println("Sony TV selected.");
       break;
     } else if (line == "2") {
-      selectedTV = TV_ADMIRAL;
+      selectedTV = TV_ADMIRAL_SHARP;
       sAddress = ADMIRAL_IR_ADDRESS;
       sRepeats = ADMIRAL_IR_REPEATS;
       sMinDelayMs = ADMIRAL_IR_MIN_DELAY_MS;
-      Serial.println("Admiral TV selected.");
+      Serial.println("Admiral (Sharp) TV selected.");
       break;
     } else {
       Serial.println("Invalid selection.");
