@@ -8,7 +8,7 @@
 
 // IR Commands
 //
-// (  1) 0x00 1
+// (  0) 0x00 1
 // (  1) 0x01 2
 // (  2) 0x02 3
 // (  3) 0x03 4
@@ -135,7 +135,7 @@
 // (124) 0x7c HUE, COLOR, BRIGHTNESS, SHARPNESS
 // (125) 0x7d
 // (126) 0x7e
-// (127) 0x7f TEST
+// (127) 0x7f TEST (0x7f + 0x16 to power off (& factory reset?)
 // (128) 0x80 1
 // (129) 0x81 2
 // (130) 0x82 3
